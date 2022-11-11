@@ -25,3 +25,5 @@ class Appointment(models.Model):
     doc_id = models.IntegerField()
     appoint_date = models.DateField()
     description = models.CharField()
+
+    #abhay

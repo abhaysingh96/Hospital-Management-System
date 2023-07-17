@@ -14,7 +14,7 @@
 
 {% if error == "yes" %}
 <script>
-    alert('invalid login. Try again');
+    alert('Couldn't add, Something went wrong. Try again');
 </script>
 
 {% endif %}
@@ -29,6 +29,8 @@
         <input type="text" class="form-control"name="mobile">
         <label> Special </label>
         <input type="text" class="form-control"name="special">
+        <label> Fees </label>
+        <input type="text" class="form-control"name="fees">
 
         <input type="submit" value="submit" class="form-control btn btn-primary">
     </form>

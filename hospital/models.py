@@ -5,10 +5,11 @@ class Doctor(models.Model):
     Name = models.CharField(max_length=50)
     mobile = models.IntegerField()
     special = models.CharField(max_length=50)
-    fees = models.IntegerField()
+    fees = models.IntegerField(default=100)
 
     def __str__(self):
         return self.Name
+
 
 class Patient(models.Model):
     name = models.CharField(max_length=50)
@@ -27,5 +28,4 @@ class Appointment(models.Model):
     time = models.TimeField()
 
     def __str__(self):
-        return self.Doctor.Name + " "+ self.Patient.name
-
+        return self.Doctor.Name + " " + self.Patient.name

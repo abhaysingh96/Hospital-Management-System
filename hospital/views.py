@@ -35,7 +35,7 @@ def Index(request):
         a += 1
     d1 = {'d': d, 'p': p, 'a': a}
 
-    return render(request, 'index.html',d1)
+    return render(request, 'index.html', d1)
 
 
 def Login(request):
@@ -48,10 +48,6 @@ def Login(request):
             if user.is_staff:
                 login(request, user)
                 error = "no"
-
-            else:
-                error = "yes"
-
         except:
             error = "yes"
     d = {'error': error}
@@ -78,7 +74,7 @@ def Delete_Doctor(request, pid):
         return redirect('login')
     doctor = Doctor.objects.get(id=pid)
     doctor.delete()
-    return redirect('view_doctor.html')
+    return redirect('view_doctor')
 
 
 def Add_Doctor(request):
@@ -89,10 +85,11 @@ def Add_Doctor(request):
         n = request.POST['name']
         m = request.POST['mobile']
         sp = request.POST['special']
+        f = request.POST['fees']
 
         try:
-            Doctor.objects.create(Name=n, mobile=m, special=sp)
-            error = 'np'
+            Doctor.objects.create(Name=n, mobile=m, special=sp, fees=f)
+            error = 'no'
 
         except:
             error = "yes"
@@ -105,7 +102,7 @@ def View_Patient(request):
         return redirect('login')
     doc = Patient.objects.all()
     d = {'doc': doc}
-    return render(request, 'view_doctor.html', d)
+    return render(request, 'view_patient.html', d)
 
 
 def Delete_Patient(request, pid):
@@ -113,7 +110,7 @@ def Delete_Patient(request, pid):
         return redirect('login')
     patient = Patient.objects.get(id=pid)
     patient.delete()
-    return redirect('view_patient.html')
+    return redirect('view_patient')
 
 
 def Add_Patient(request):
@@ -126,8 +123,8 @@ def Add_Patient(request):
         m = request.POST['mobile']
         a = request.POST['address']
         try:
-            Patient.objects.create(Name=n, gender=g, mobile=m, address=a)
-            error = 'np'
+            Patient.objects.create(name=n, gender=g, mobile=m, address=a)
+            error = 'no'
 
         except:
             error = "yes"
@@ -150,9 +147,8 @@ def Add_Appointment(request):
         doctor = Doctor.objects.filter(Name=n).first()
         patient = Patient.objects.filter(name=p).first()
         try:
-            Appointment.objects.create(Doctor=doctor, Patient=patient, date=da, time=t)
-            error = 'np'
-
+            Appointment.objects.create(doctor=doctor, patient=patient, date=da, time=t)
+            error = "no"
         except:
             error = "yes"
     d = {'doctor': doctor1, 'patient': patient1, 'error': error}
@@ -162,7 +158,7 @@ def Add_Appointment(request):
 def View_Appointment(request):
     if not request.user.is_staff:
         return redirect('login')
-    doc = Patient.objects.all()
+    doc = Appointment.objects.all()
     d = {'doc': doc}
     return render(request, 'view_appointment.html', d)
 
@@ -172,4 +168,4 @@ def Delete_Appointment(request, pid):
         return redirect('login')
     app = Appointment.objects.get(id=pid)
     app.delete()
-    return redirect('view_appointment.html')
+    return redirect('view_appointment')
